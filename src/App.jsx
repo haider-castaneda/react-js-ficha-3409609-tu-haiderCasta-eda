@@ -1,15 +1,26 @@
 import ProductoCard from "./components/ProductoCard";
 import { productos as productosIniciales } from "./data/productos";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [productos, setProductos] = useState(productosIniciales);
+    const [productos, setProductos] = useState(() => {
+    const guardados = localStorage.getItem("productos");
+
+    return guardados ? JSON.parse(guardados) : productosIniciales;
+  });
 
   const [nombre, setNombre] = useState("");
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
   const [editandoId, setEditandoId] = useState(null);
+
+    useEffect(() => {
+    localStorage.setItem(
+      "productos",
+      JSON.stringify(productos)
+    );
+  }, [productos]);
 
   const guardarProducto = (e) => {
     e.preventDefault();
