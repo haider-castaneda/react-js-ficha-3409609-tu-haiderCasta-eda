@@ -2,9 +2,10 @@ import ProductoCard from "./components/ProductoCard";
 import { productos as productosIniciales } from "./data/productos";
 import "./App.css";
 import { useEffect, useState } from "react";
+import BuscadorPokemon from "./components/BuscadorPokemon";
 
 function App() {
-    const [productos, setProductos] = useState(() => {
+  const [productos, setProductos] = useState(() => {
     const guardados = localStorage.getItem("productos");
 
     return guardados ? JSON.parse(guardados) : productosIniciales;
@@ -15,7 +16,7 @@ function App() {
   const [stock, setStock] = useState("");
   const [editandoId, setEditandoId] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(
       "productos",
       JSON.stringify(productos)
@@ -65,14 +66,14 @@ function App() {
     setStock("");
   };
 
-    const editarProducto = (producto) => {
+  const editarProducto = (producto) => {
     setEditandoId(producto.id);
     setNombre(producto.nombre);
     setPrecio(producto.precio);
     setStock(producto.stock);
   };
 
-    const eliminarProducto = (id) => {
+  const eliminarProducto = (id) => {
     const confirmar = window.confirm(
       "¿Seguro que desea eliminar este producto?"
     );
@@ -96,7 +97,6 @@ function App() {
       <p>Productos disponibles: {disponibles.length}</p>
       <p>Valor del inventario: ${valorInventario}</p>
 
-      {/* PIEZA B */}
       <form onSubmit={guardarProducto}>
         <input
           type="text"
@@ -124,7 +124,7 @@ function App() {
         </button>
       </form>
 
-            <section className="productos">
+      <section className="productos">
         {productos.map(producto => (
           <div key={producto.id}>
             <ProductoCard producto={producto} />
@@ -139,6 +139,8 @@ function App() {
           </div>
         ))}
       </section>
+
+      <BuscadorPokemon />
     </main>
   );
 }
